@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Laboratorium Fisika Teori & Komputasi – UNHAS</title>
+
+<style>
+/* ================================
+   RESET
+================================ */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ================================
+   THEME SYSTEM
+================================ */
+:root{
+  --bg-light:#d6e8ff;
+  --bg-dark:#020921;
+  --fg-light:#02060f;
+  --fg-dark:#d5e5ff;
+  --accent:#ff3b3b;
+  --card-dark:#071228;
+  --card-light:#ffffff;
+}
+
+body.light{
+  background:
+    url("https://i.ibb.co/0G5YHqf/stars.jpg") repeat,
+    var(--bg-light);
+  color:var(--fg-light);
+}
+
+body.dark{
+  background:
+    url("https://i.ibb.co/0G5YHqf/stars.jpg") repeat,
+    var(--bg-dark);
+  color:var(--fg-dark);
+}
+
+/* Ensure body is full-height */
+html,body{
+  height:100%;
+}
+
+/* ================================
+   HEADER & NAV
+================================ */
+header{
+  background:var(--accent);
+  padding:12px 0;
+}
+
+nav{
+  display:flex;
+  justify-content:center;
+  gap:28px;
+}
+
+nav a{
+  color:#fff;
+  font-weight:bold;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+/* ================================
+   PAGE WRAPPER
+================================ */
+.page{
+  display:none;
+  padding:20px;
+}
+
+/* Show only active page */
+.page.active{
+  display:block;
+}
+
+/* ================================
+   CARD LOOK
+================================ */
+.card{
+  background:var(--card-light);
+  padding:20px;
+  border-radius:12px;
+  margin:10px 0;
+}
+
+body.dark .card{
+  background:var(--card-dark);
+}
+
+/* ================================
+   BUTTONS
+================================ */
+button{
+  padding:8px 16px;
+  border:none;
+  border-radius:6px;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:0.85;
+}
+
+/* ================================
+   FORM TABLE
+================================ */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+table, th, td{
+  border:1px solid #888;
+}
+
+th, td{
+  padding:10px;
+  text-align:left;
+}
+
+/* ================================
+   MODAL LOGIN
+================================ */
+#loginModal{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+#loginBox{
+  background:#fff;
+  padding:20px;
+  width:320px;
+  border-radius:12px;
+}
+
+#loginBox h3{
+  margin-bottom:10px;
+}
+</style>
+</head>
+<body class="dark">
+
+<!-- =======================================
+     TOP CONTROL BAR
+======================================= -->
+<div style="position:fixed;top:10px;right:10px;z-index:999;">
+  <button id="themeBtn">Ganti Tema</button>
+  <button id="adminBtn">Login Admin</button>
+</div>
+
+<!-- =======================================
+     HEADER & NAV
+======================================= -->
+<header>
+  <nav>
+    <a data-page="home">Beranda</a>
+    <a data-page="profil">Profil Lab</a>
+    <a data-page="mahasiswa">Data Mahasiswa</a>
+  </nav>
+</header>
+
+<!-- =======================================
+     HALAMAN 1 – BERANDA
+======================================= -->
+<section id="home" class="page active">
+  <h2>Selamat datang di Laboratorium Fisika Teori & Komputasi – UNHAS</h2>
+  <p>
+    Website ini menyajikan informasi akademik, penelitian, dan kegiatan mahasiswa yang berada di bawah laboratorium Fisika Teori dan Komputasi.
+  </p>
+  <p>
+    Telusuri menu di atas untuk melihat profil lab atau mengelola data mahasiswa (khusus admin).
+  </p>
+</section>
+
+<!-- =======================================
+     HALAMAN 2 – PROFIL
+======================================= -->
+<section id="profil" class="page">
+  <h2>Profil Laboratorium</h2>
+  <div class="card">
+    <p>
+      Laboratorium Fisika Teori dan Komputasi Universitas Hasanuddin fokus pada riset mendalam dalam bidang:
+    </p>
+    <ul>
+      <li>Fisika partikel elementer</li>
+      <li>Astrofisika dan kosmologi</li>
+      <li>Simulasi numerik sistem kompleks</li>
+      <li>Fisika komputasi material dan energi</li>
+    </ul>
+    <p style="margin-top:10px;">
+      Laboratorium ini mengintegrasikan pengembangan teori fisika mutakhir dengan kekuatan komputasi modern, sehingga mahasiswa dapat:
+    </p>
+    <ul>
+      <li>Menguji model matematika terhadap fenomena alam</li>
+      <li>Mengembangkan simulasi numerik skala besar</li>
+      <li>Menyelesaikan permasalahan fisika yang tidak dapat diselesaikan secara analitik</li>
+    </ul>
+    <p>
+      Melalui kegiatan asistensi, penelitian, dan publikasi ilmiah, laboratorium ini berperan aktif dalam mempersiapkan peneliti masa depan yang kompetitif dan berwawasan global.
+    </p>
+  </div>
+</section>
+
+<!-- =======================================
+     HALAMAN 3 – DATA MAHASISWA
+======================================= -->
+<section id="mahasiswa" class="page">
+  <h2>Data Mahasiswa</h2>
+
+  <div id="lock" class="card">
+    <p><b>Silakan login admin terlebih dahulu.</b></p>
+  </div>
+
+  <div id="mahasiswaContent" style="display:none;">
+    <div class="card">
+      <h3>Tambah Mahasiswa</h3>
+      <input id="nama" type="text" placeholder="Nama">
+      <input id="nim" type="text" placeholder="NIM">
+      <button onclick="tambahMahasiswa()">Tambah</button>
+    </div>
+
+    <div class="card">
+      <h3>Daftar Mahasiswa</h3>
+      <table>
+        <thead>
+          <tr><th>Nama</th><th>NIM</th><th>Aksi</th></tr>
+        </thead>
+        <tbody id="tabelMahasiswa"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- =======================================
+     MODAL LOGIN
+======================================= -->
+<div id="loginModal">
+  <div id="loginBox">
+    <h3>Login Admin</h3>
+    <input id="user" type="text" placeholder="username" style="width:100%;margin-bottom:10px;">
+    <input id="pass" type="password" placeholder="password" style="width:100%;margin-bottom:10px;">
+    <button onclick="doLogin()">Login</button>
+  </div>
+</div>
+
+<!-- =======================================
+     SCRIPT BAGIAN FUNGSI
+======================================= -->
+<script>
+let isAdmin=false;
+let mahasiswa=[];
+
+/* ============================
+   NAVIGATION
+============================ */
+document.querySelectorAll("nav a").forEach(link=>{
+  link.addEventListener("click",()=>{
+    const page = link.getAttribute("data-page");
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+  });
+});
+
+/* ============================
+   THEME SWITCH
+============================ */
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  document.body.classList.toggle("dark");
+  document.body.classList.toggle("light");
+});
+
+/* ============================
+   LOGIN MODAL
+============================ */
+document.getElementById("adminBtn").onclick=()=>{
+  document.getElementById("loginModal").style.display="flex";
+};
+
+function doLogin(){
+  let u=document.getElementById("user").value;
+  let p=document.getElementById("pass").value;
+
+  if(u=="admin" && p=="1234"){
+    isAdmin=true;
+    document.getElementById("loginModal").style.display="none";
+    loadMahasiswa();
+  } else {
+    alert("Login gagal");
+  }
+}
+
+/* ============================
+   LOAD / BLOCK ACCESS
+============================ */
+function loadMahasiswa(){
+  if(isAdmin){
+    document.getElementById("lock").style.display="none";
+    document.getElementById("mahasiswaContent").style.display="block";
+  }
+}
+
+/* ============================
+   CRUD MAHASISWA
+============================ */
+function tambahMahasiswa(){
+  const nama=document.getElementById("nama").value;
+  const nim=document.getElementById("nim").value;
+
+  if(!nama || !nim){
+    alert("Isi semua data!");
+    return;
+  }
+
+  mahasiswa.push({nama,nim});
+  renderTable();
+}
+
+function renderTable(){
+  const body=document.getElementById("tabelMahasiswa");
+  body.innerHTML="";
+
+  mahasiswa.forEach((m,i)=>{
+    body.innerHTML+=`
+      <tr>
+        <td>${m.nama}</td>
+        <td>${m.nim}</td>
+        <td><button onclick="hapus(${i})">Hapus</button></td>
+      </tr>
+    `;
+  });
+}
+
+function hapus(i){
+  mahasiswa.splice(i,1);
+  renderTable();
+}
+</script>
+
+</body>
+</html>
